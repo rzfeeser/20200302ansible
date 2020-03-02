@@ -1,0 +1,10 @@
+---
+- name: Playbook to copy a file into remote hosts
+  hosts: planetexpress  ## this is a group run against
+  gather_facts: yes   # this controls if setup.py runs
+
+  tasks:
+          - name: Copy a file from local controller to remove hosts
+            copy:
+                    src: ~/ans/files/letsgo.tolunch   # this is the file to copy
+                    dest: ~/         # this is where to move to the file to (on remote hosts)
