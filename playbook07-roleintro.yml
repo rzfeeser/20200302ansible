@@ -1,0 +1,7 @@
+---
+- name: Example of a playbook that installs free linux terminal games on the local host
+  hosts: localhost
+  connection: local
+
+  roles:
+          - rzfeeser.ansible_role_free_linux_term_games
