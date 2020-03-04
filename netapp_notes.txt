@@ -1,0 +1,7 @@
+NetApp Notes:
+https://netapp.io/2018/10/08/getting-started-with-netapp-and-ansible-install-ansible/
+
+Be sure each module includes:
+
+https: true
+validate_certs: false

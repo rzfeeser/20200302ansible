@@ -1,0 +1,45 @@
+Class links:
+
+Alta3 Research YouTube channel (free videos here):
+https://www.youtube.com/user/Alta3Research/videos
+
+
+
+Ansible Docs:
+
+Ansible module list:
+https://docs.ansible.com/ansible/latest/modules/modules_by_category.html
+
+Call Back plugins (control screen output):
+https://docs.ansible.com/ansible/latest/plugins/callback.html#example-callback-plugins
+
+Ansible Prompts:
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_prompts.html
+
+Special Vars:
+https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
+
+NetApp Webminar on Ansible: ## skip to min:sec 26:33   <- show to class
+https://www.ansible.com/resources/webinars-training/netapp-modules-ansible
+
+NetApp install notes:
+https://netapp.io/2018/10/08/getting-started-with-netapp-and-ansible-install-ansible/
+
+
+
+Other Useful Resources:
+
+Overview of HTTP Verbs
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+
+URI syntax:
+https://tools.ietf.org/html/rfc3986
+
+RFC 7231 - HTTP/1.1 Semantics and Content (HTTP METHODS) 
+https://tools.ietf.org/html/rfc7231#section-4
+
+RFC 5789 - HTTP PATCH 
+https://tools.ietf.org/html/rfc5789#section-2
+
+YAML spec:
+https://yaml.org/spec/1.2/spec.html
