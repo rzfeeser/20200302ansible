@@ -1,0 +1,51 @@
+---
+- name: Testing the power of the YAML alias
+  hosts: localhost
+
+  #  vars_files:
+  #          - secretcreds.yml   # this file could be encrypted with vault
+
+  vars:
+          # this is a a YAML trick (not ANSIBLE)
+          # YAML Is parsed BEFORE Ansilbe
+          #
+          # the alias is madmax
+          moviequote: &madmax
+              msg: "Who rules bartertown?!"
+
+
+          # the alias is torontocreds
+          creds: &easycreds
+              password: qwerty
+              username: admin
+              host: host.example.com
+
+          # think of secretc
+          #          secretcreds: &eyesoff
+          #              password: "{{ storagepass }}"   # define in secretcreds.yml
+          #              username: "{{ storageun }}"     # define in secretcreds.yml
+          #              host: "{{ storagehost }}"       # define in secretcreds.yml
+
+
+
+          # check out this copy and past manuver
+          grabthistask: &yamlcopypaste
+              - name: This task was copied by the YAML parser
+                debug:
+                        msg: "This was copied by the YAML parser to the reference found in the tasks section"
+                  
+                  
+
+  tasks:
+              - name: testing YAML alias
+                debug:
+                        # think of the line below as a YAML CUT AND PASTE
+                        <<: *madmax
+    
+              - name: YAML is parsed BEFORE ansible
+                debug:
+                        # think of the link below as a YAML CUT AND PASTE
+                        msg:
+                                <<: *easycreds
+    
+              - <<: *yamlcopypaste

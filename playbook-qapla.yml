@@ -1,0 +1,46 @@
+---
+# Russell Zachary Feeser
+# z@rzfeeser.com || Python & Ansible Trainer
+# Purpose: To boldly go where no Ansible trainer has gone before,
+#          and seek out how to use Ansible to translate English to Klingon
+#
+# Klingon is a "fictional" language from Gene Roddenberry's Star Trek. I
+# found an API that let's me send a POST with an embedded webform with an
+# English phrase, and return the Klingon.
+#
+# This API is rate-limited to 60 lookups a day.
+#
+# English: Klingon
+# "we are Klingon!": tlhIngan maH!
+# "success": qapla'
+- name: Learn to speak klingon (60 calls per day)
+  gather_facts: no
+  hosts: localhost
+  # Read the doc here:
+  # https://funtranslations.com/api/klingon
+  
+  # are vars_prompts automation friendly? not really...
+  vars_prompt:
+          - name: phrase   # this is the var to be defined at run time
+            prompt: "What is the English phrase to translate into Klingon?"
+            private: no
+
+  tasks:
+          - name: Learn to speak Klingon!
+            uri:
+                  url: https://api.funtranslations.com/translate/klingon.json
+                  method: POST
+                  body_format: form-urlencoded
+                  body:
+                    text: "{{ phrase }}"  # this is what we want to have translated
+            register: startrek
+
+          - name: Show our results
+            debug:
+                    var: startrek.json.contents   # this is the part of the JSON with our response
+
+          - name: Write out the output
+            lineinfile:
+                    line: "(English) {{ startrek.json.contents.text }} (Klingon) {{ startrek.json.contents.translated }}\n"
+                    path: ~/ans/files/klingon_dictionary.txt   # where the file is to write to
+                    create: yes   # create the file if it is not yet created otherwise will fail

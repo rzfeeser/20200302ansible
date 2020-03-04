@@ -1,0 +1,58 @@
+---
+- name: Exploring the PokeAPI
+  gather_facts: yes
+  hosts: localhost
+
+  tasks:
+          - name: use the URI module to perform an HTTPS GET
+            uri:
+                    url: https://pokeapi.co/api/v2/pokemon/
+            register: results
+            #tags:
+            #       - example1
+
+          - name: display results
+            debug:
+                    var: results
+            #tags:
+            #        - example1
+
+
+
+
+          - name: Pass a API parameter ?limit=2000
+            uri:
+                    url: https://pokeapi.co/api/v2/pokemon/?limit=2000
+            register: bigresults
+            #tags:
+            #        - example2
+            #        - example3
+
+          - name: display bigresults
+            debug:
+                    var: bigresults   # my results are TOO BIG!
+                    #var: bigresults.keys()   # PYTHON METHOD TO THE RESCUE!
+            #tags:
+            #        - example2
+         
+          - name: display bigresults.results
+            debug:
+                    var: bigresults.json.results
+            #tags:
+            #        - example2
+         
+          - name: Display all the pokemon!
+            debug:
+                    msg: "Gotta catch a {{ item.name }}!"
+            loop: "{{ bigresults.json.results }}"
+            #tags:
+            #        - example2
+          
+          - name: Write out those pokemon!
+            lineinfile:
+                    create: yes   # if file does not exist, make it!
+                    line: "{{ item.name }}"   # what to write out
+                    dest: ~/ans/files/pokemon_all.txt   # file to write to
+            loop: "{{ bigresults.json.results }}"
+            #tags:
+            #        - example3

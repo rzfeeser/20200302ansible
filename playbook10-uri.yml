@@ -21,6 +21,7 @@
           - name: debug the results
             debug:
                     var: astros.json.people
+                    #msg: "{{ astros.json.people }}"
 
           - name: set a new variable to make things easy
             set_fact:

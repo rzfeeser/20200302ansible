@@ -1,0 +1,27 @@
+---
+- name: A playbook to work against Dell EMC PowerMax
+  hosts: localhost
+
+  vars:
+    unispherehost: 'your_unisphere_host_url'
+    universion: "90"
+    verifycert: False
+    user: 'your_username'
+    password: 'your_password'
+    serial_no:   "your_serial_no"
+    sg_name: 'sample_storage_group'
+    tdev_volumes: False
+    threshold_cap: enter the size in GB
+
+  tasks:
+  - name: Get list of volumes
+    dellemc_powermax_gatherfacts:
+      unispherehost: "{{ unispherehost }}"
+      universion: "{{universion}}"
+      verifycert: "{{verifycert}}"
+      user: "{{user}}"
+      password: "{{password}}"
+      serial_no: "{{serial_no}}"
+      tdev_volumes: "{{tdev_volumes}}"
+      gather_subset:
+         - vol

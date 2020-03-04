@@ -1,0 +1,41 @@
+---
+- name: diff between raw vs command module
+  hosts: localhost
+
+  tasks:
+          - name: Issue a command with raw
+            raw: "ls -la"
+            register: results
+
+          - name: Debug the raw command
+            debug:
+                    var: results
+
+          - name: Issue a command with command
+            command: "ls -la"
+            register: results
+
+          - name: Debug the command command
+            debug:
+                    var: results
+
+          - name: Show that i can JUST produce the text
+            debug:
+                    var: results.stdout
+
+          - name: dump out that text to file
+            copy:
+                    content: "{{ results.stdout }}"
+                    dest: files/formattinglesson.txt
+
+          - name: i want to preserve the value within my throw  away var called 'results'
+            set_fact:
+                    resultsofcommand: results
+
+          - name: how does shell work?
+            shell: "ls -la >> shellresults.txt"
+            register: results
+
+          - name: Debug the command command
+            debug:
+                    var: results

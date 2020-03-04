@@ -1,0 +1,16 @@
+---
+- name: Read a file of csv hosts
+  hosts: localhost
+
+  vars:
+          mycsvhosts: "{{ lookup('file', '~/ans/inv/dev/hosts.csv') }}"
+  
+  tasks:
+          - name: print out mycsvhosts
+            debug:
+                    var: mycsvhosts
+
+          - name: use the list i created to loop across
+            debug:
+                    msg: "{{ item }}"
+            loop: "{{ mycsvhosts.split(',') }}"

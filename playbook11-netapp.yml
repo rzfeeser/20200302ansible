@@ -1,0 +1,30 @@
+---
+- name: Volume Create
+  hosts: localhost
+
+  vars:
+          creds: &bluejays
+              hostname: 172.32.0.182
+              username: admin
+              password: netapp123
+          vserver: vserver1
+          aggr: aggr1
+          vol_name: ansibleVol
+
+  tasks:
+        - name: Volume Create
+          na_ontap_volume:
+                  state: present
+                  name: “{{ vol_name }}”
+                  vserver: “{{ vserver }}”
+                  aggregate_name: “{{ aggr }}”
+                  size: 10
+                  size_unit: gb
+                  policy: default
+                  junction_path: “/{{ vol_name }}”
+                  <<:*bluejays
+                  #hostname: “{{ hostname }}”
+                  #username: “{{ username }}”
+                  #password: “{{ password }}”
+                  https: true
+                  validate_certs: false

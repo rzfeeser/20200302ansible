@@ -1,0 +1,6 @@
+2020-03-04 15:43:33,235 dellemc_powermax_gatherfacts.py INFO : universion_details: {'is_valid_universion': True, 'user_message': ''}
+2020-03-04 15:43:33,235 dellemc_powermax_gatherfacts.py INFO : Got PyU4V instance for provisioning on to PowerMax 
+2020-03-04 15:43:33,236 dellemc_powermax_gatherfacts.py INFO : Got PyU4V instance for replication on to PowerMax 
+2020-03-04 15:43:33,236 dellemc_powermax_gatherfacts.py INFO : Getting Volume List 
+2020-03-04 15:43:33,264 rest_requests.py ERROR : The GET request to URL https://your_unisphere_host_url:8443/univmax/restapi/90/sloprovisioning/symmetrix/your_serial_no/volume timed-out, but may have been successful. Please check the array. Exception received: HTTPSConnectionPool(host='your_unisphere_host_url', port=8443): Max retries exceeded with url: /univmax/restapi/90/sloprovisioning/symmetrix/your_serial_no/volume (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7f41d7bd9518>: Failed to establish a new connection: [Errno -2] Name or service not known',)).
+2020-03-04 15:43:33,264 dellemc_powermax_gatherfacts.py ERROR : Get Volumes for array your_serial_no failed with error Bad or unexpected response from the storage volume backend API: Error get volume. The status code received is None and the message is None. 
