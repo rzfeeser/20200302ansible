@@ -1,0 +1,24 @@
+---
+- name: Write a playbook that runs a python script
+  hosts: localhost
+
+  tasks:
+          - name: run our python script
+            script: ~/ans/scripts/apilookup.py
+            #creates:
+            #removes:
+            args:
+                    executable: /usr/bin/python3
+            register: results
+
+          - name: show what results is
+            debug:
+                    var: results
+
+          - name: try to invoke a script with command
+            command: "python3 ~/ans/scripts/apilookup.py"
+            register: results
+
+          - name: show the results
+            debug:
+                    var: results

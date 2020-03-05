@@ -1,0 +1,15 @@
+---
+- name: using my custom module
+  hosts: localhost
+
+  tasks:
+          - name: Run my custom ISS module
+            isspass:
+                    lat: 45.0
+                    lon: -122.3
+                    file: myresults.txt
+            register: astros
+
+          - name: did it work?
+            debug:
+                    var: astros

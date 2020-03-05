@@ -1,0 +1,29 @@
+---
+- name: Ansible Playbook to run Perl Script
+  hosts: localhost
+
+  tasks:
+          - name: Run a perl script with the script module
+            script: ~/ans/scripts/perl-hello.pl
+            args:
+                    executable: /usr/bin/perl
+            register: results
+
+          - name: Debug the results
+            debug:
+                    var: results
+
+          - name: Run a perl script that performs an API lookup
+            script: ~/ans/scripts/perl-apilookup.pl
+            args:
+                    executable: /usr/bin/perl
+            register: results
+
+          - name: Debug the results
+            debug:
+                    var: results
+
+          - name: print out results
+            copy:
+                    content: "{{ results.stdout }}"
+                    dest: ~/ans/files/perl-apilookup_output.txt
