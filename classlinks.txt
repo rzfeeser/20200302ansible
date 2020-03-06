@@ -57,6 +57,9 @@ https://requests.readthedocs.io/en/master/
 
 Other Useful Resources:
 
+IBM Spectrum
+https://www.ibm.com/support/knowledgecenter/STVLF4_8.3.0/spectrum.virtualize.830.doc/rest_api_overview.html
+
 Overview of HTTP Verbs
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
 
