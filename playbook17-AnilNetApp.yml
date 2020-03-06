@@ -1,0 +1,61 @@
+---
+- name: Anil NetApp create Volume Playbook
+  hosts: localhost   # req to talk to netapp-lib
+  gather_facts: yes
+
+  vars_files:
+          - vars/order.yml   # orders:
+                             # - igroup: DR04-STS0-HV
+                             #   noofvols: 5
+                             #   volsize: 50
+                             # - ipgroup: R2D2-C3PO-ZF
+                             #   noofvols: 7
+                             #   volsize: 60
+
+  vars:   # must use network username and password in Ansible Tower
+          username: "{{ ansible_env.ANSIBLE_NET_USERNAME }}"
+          password: "{{ ansible_env.ANSIBLE_NET_PASSWORD }}"
+          hostname: 1.1.1.1
+
+   tasks:
+          - name: Issue command to NetApp ontap to determine last vols created
+            na_ontap_command:
+                    hostname: "{{ hostname }}"
+                    username: "{{ username }}"
+                    password: "{{ password }}"
+                    command: ["lun mapped show -vserver cagevsp11 -igroup {{ orders.igroup }}  -FIElds path,lun-id"]
+            register: results
+
+          - name: Display the results
+            debug:
+                    var: results
+                    verbosity: 1
+
+          - name: this should be the last vol created
+            debug:
+                    var: results.stdout_lines[-1].split()[-1]
+                    verbosity: 1
+
+          - name: Set the LAST var created
+            set_fact:
+                    lastvolcreated: results.stdout_lines[-1].split()[1].split('/')[1]
+                    lastvolcreatedno: lastvolcreated[-3:]
+                    volname: lastvolcreated[:-3]
+                    vserver: results.stdout_lines[-1].split()[1].split('/')[0]
+
+          - name: NetApp create volume
+            na_ontap_lun:
+                    state: present
+                    name: "{{ volname }}"
+                    flexvol_name: "{{ volname }}{{ %000d|format(item) }}"
+                    vserver: "{{ vserver }}"
+                    size: "{{ orders.volsize }}"
+                    size_unit: gb
+                    ostype: linux
+                    space_reserve: True
+                    hostname: "{{ hostname }}"
+                    username: "{{ username }}"
+                    password: "{{ password }}"
+            loop: range("{{ 1 + lastvolcreatedno|int }}", "{{ 1 + noofvols|int + lastvolcreatedno|int}}")|list)
+
+

@@ -1,0 +1,58 @@
+---
+- name: Pre-Check Phase
+  block:    
+    - name: Run PMax gather_facts module
+      dellemc_powermax_gatherfacts:
+        unispherehost: "{{ ush }}"
+        universion: "{{ usv }}"
+        verifycert: "{{ vc }}"
+        user: "{{ un }}"
+        password: "{{ pw }}"
+      register: results
+
+    - name: Provide serial number for next gather facts
+      dellemc_powermax_gatherfacts:
+        unispherehost: "{{ ush }}"
+        universion: "{{ usv }}"
+        verifycert: "{{ vc }}"
+        user: "{{ un }}"
+        password: "{{ pw }}"
+        serial_no: "{{ results.Arrays[0] }}"
+        gather_subset:
+          - vol
+          - sg
+          - srp
+          - pg
+          - host
+          - hg
+          - port
+          - mv
+          - rdf
+      register: arrayresults
+
+    # this is created on the controller
+    # because the playbook is running against host: localhost
+    - name: Create a location for PowerMax output
+      file:
+        state: directory
+        dest: pmax_audit/
+
+    # this is created on the controller
+    # because the playbook is running against host: localhost
+    - name: Create output file
+      copy:
+        dest: "pmax_audit/{{ results.Arrays[0] }}-{{ ansible_date_time.date }}.json"
+        content: "{{ arrayresults }}"
+        
+    - name: Fail is Storage Group does not exist
+      fail:
+        msg: "The Storage Group you supplied does not exist within the PMax array! Aborting!"
+      when: "sg2expand not in arrayresults.StorageGroups"
+      
+  # if the rescue block successfully executes then the playbook will continue
+  # a second fail within the rescue block will abort the entire playbook    
+  rescue:
+    - name: Pre-Check phase FAILED. Exiting.
+      fail:
+        msg: Pre-Check phase FAILED. Playbook will not continue. Exiting.
+

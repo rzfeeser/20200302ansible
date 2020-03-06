@@ -2,11 +2,21 @@
 - name: using my custom module
   hosts: localhost
 
+  vars_prompt:
+          - name: latlook
+            prompt: "What is latitude?"
+            private: no
+
+          - name: lonlook
+            prompt: "What is the longitude?"
+            private: yes
+
+
   tasks:
           - name: Run my custom ISS module
             isspass:
-                    lat: 45.0
-                    lon: -122.3
+                    lat: "{{ latlook|default(45.6) }}" # 45.6
+                    lon: "{{ lonlook|default(-122.4) }}" # -122.4
                     file: myresults.txt
             register: astros
 

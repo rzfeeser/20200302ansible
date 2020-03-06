@@ -139,8 +139,8 @@ def run_module():
     # during the execution of the module, if there is an exception or a
     # conditional state that effectively causes a failure, run
     # AnsibleModule.fail_json() to pass in the message and the result
-    if issrequest.status_code != 200:
-        module.fail_json(msg='Uh oh, you did not get back success', **result)
+    #if issrequest.status_code != 200:
+    #    module.fail_json(msg='Uh oh, you did not get back success', **result)
 
     # in the event of a successful module execution, you will want to
     # simple AnsibleModule.exit_json(), passing the key/value results

@@ -1,0 +1,51 @@
+---
+- name: building a playbook to work through a jump box
+  hosts: jumpbox
+  gather_facts: yes
+
+  tasks:
+          - name: Precheck phase
+            block:
+                    - name: Pull or Clone git repo https://github.com/rzfeeser/jmpbox
+                      git:
+                              dest: ~/scripts
+                              repo: https://github.com/rzfeeser/jmpbox
+
+                    - name: Ensure python3 is upto date
+                      apt:
+                              name:
+                                      - python3-pip
+                                      - perl
+                                      - cpanminus
+                              state: present
+                      become: yes
+
+                    - name: ensure fry has cpan requirements
+                      cpanm:
+                              name: REST::Client
+                      become: yes
+
+                    - name: Make sure that....
+                      fail:
+                              msg: "Precheck requirement not met"
+                      when: ansible_distribution != "Ubuntu"
+            rescue:
+                    - name: Precheck phase FAILED
+                      fail:
+                              msg: "Precheck phase failed. Nothing to rollback. Exiting"
+
+          - name: Work to do
+            block:
+                    - name: Make fry execute one of the scripts that are already on his box
+                      command: "python3 ~/scripts/apilookup.py"
+                      register: results
+                    
+                    - debug:
+                            var: results
+
+                    - name: make fry execute script 2 if script 1 was successful
+                      command: "perl ~/scripts/perl-apilookup.pl"
+                      register: results
+
+                    - debug:
+                            var: results
