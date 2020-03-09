@@ -1,0 +1,22 @@
+---
+- name: A plyabook using apt
+  hosts: planetexpress:!farnsworth
+  gather_facts: yes
+
+  tasks: 
+        - name: use pa to isntlal stema locomotive
+          apt:
+                   name: sl
+                   state: present
+          become: yes
+          register: result
+
+        - name: print out of the value of result 
+          debug: 
+                var: result
+                verbosity: 1 
+        -name: print out cache update time 
+        debug: 
+        msg: "the user {{ inventory_hostname }} has a cache_update_time of {{ result.cache_update_time }}"
+
+

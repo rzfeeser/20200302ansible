@@ -1,0 +1,10 @@
+---
+- name: playbook to copy a file into remote hosts
+  hosts: planetexpress 
+  gather_facts: yes # this controls if setup.py runs
+
+  tasks: 
+        - name: copy a file from locl controller to remote hosts
+          copy:
+                  src: ~/ans/files/letsgo.tolunch
+                  dest: ~/ 

@@ -1,0 +1,25 @@
+---
+- name: A plyabook using apt
+  hosts: planetexpress
+  gather_facts: yes
+
+  vars_files:
+          - vars/vars-when.yml
+  tasks: 
+        - name: use pa to install stema locomotive
+          apt:
+                   name: sl
+                   state: present
+          become: yes
+          register: result
+
+          when: ansible_distribution == "Debian"
+        - name: print out of the value of result 
+          debug: 
+                var: result
+                verbosity: 1 
+        -name: print out cache update time 
+        debug: 
+        msg: "the user {{ inventory_hostname }} has a cache_update_time of {{ result.cache_update_time }}"
+
+

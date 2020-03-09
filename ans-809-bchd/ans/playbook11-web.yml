@@ -1,0 +1,23 @@
+---
+- name: Apache server install
+  hosts: web
+  gather_facts: no
+  become: yes
+
+  tasks:
+           - name: Latest version of apacha
+             package: 
+                name: apache2 
+                state: latest
+
+           - name: make a service is running
+             service: 
+                name: apache2
+                enabled: yes
+                state: restarted 
+
+                #  -name: render a template to push to our hosts
+                #template: 
+                #src: index.html.j2
+                #dest: /var/www/html/
+
