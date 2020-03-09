@@ -1,0 +1,39 @@
+---
+- name: My playbook with vars
+  hosts: planetexpress
+  gather_facts: yes
+  become: yes     # become super user
+
+  vars:
+          newhire: [ zachf, dawnz, larryl ]
+ 
+  
+  
+  tasks:
+          - name: Create a new group
+            group:
+                    name: sandbox
+                    state: present  # state is typically always PRESENT or ABSENT
+
+
+          - name: Create a new user
+            user:
+                    name: LarryNewHire
+                    comment: This is a hire within the last 90 days
+                    state: present    # state is typically always PRESENT or ABSENT
+                    shell: /bin/bash
+                    system: no
+                    createhome: yes
+                    group: sandbox
+
+          - name: create a new user from a var
+            user:
+                    name: "{{ item }}"
+                    comment: Can we make this new hire
+                    state: present
+                    shell: /bin/bash
+                    system: no
+                    createhome: yes
+                    group: sandbox
+            loop: "{{ newhire }}"
+
