@@ -1,0 +1,30 @@
+---
+- name: My playbook with vars
+  hosts: planetexpress
+  gather_facts: yes
+  become: yes  # makes you root or sudo have choice where to put this
+  vars:
+
+     newhire:
+            - user: zachf
+              group: zgroup
+            - user: dawnz
+              group: dgroup
+  tasks:
+          - name: Create a new Group
+            group:
+                    name: "{{ item.group }}"
+                    state: present
+            loop: "{{ newhire }}"
+          - name: Create a new user
+            become: yes # can be put here if you like
+            user:
+                    name: "{{ item.user }}"
+                    comment: this is a hire within the last 90 days
+                    state: present # state is typically always PRESENT or ABSENT / this is just for an undo note
+                    shell: /bin/bash
+                    system: no
+                    createhome: yes
+                    group: "{{ item.group }}"
+            loop: "{{ newhire }}"
+

@@ -1,0 +1,13 @@
+---
+- name: Debug playbook to display ansible facts
+  hosts: planetexpress
+  gather_facts: yes
+
+  tasks:
+          - name: Print out both users distro
+            debug:
+                  var: ansible_distribution
+
+          - name: Print out both users distro ver
+            debug:
+                    var: ansible_distribution_version 

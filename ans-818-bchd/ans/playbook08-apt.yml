@@ -1,0 +1,11 @@
+---
+- name: A playbook using apt
+  hosts: planetexpress:!farnsworth
+  gather_facts: yes
+
+  tasks:
+          - name: use pa to install steam locomative
+            apt:
+                    name: sl
+                    state: present
+            become: yes
