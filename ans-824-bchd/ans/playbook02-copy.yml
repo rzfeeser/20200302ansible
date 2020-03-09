@@ -1,0 +1,12 @@
+---
+- name: Playbook to copy file into remote hosts
+  hosts: planetexpress # bender and fry host on it.
+  gather_facts: yes # this control if setup.py runs
+
+  tasks:
+          - name: Copy a file from local controller to remote hosts
+            copy:
+          
+                  src: ~/ans/files/letsgo.tolunch # this is the file to copy
+                  dest: ~/                   # this is where to move to file to (on remote hosts)
+
