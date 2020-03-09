@@ -1,0 +1,30 @@
+---
+- name: A playbook
+  hosts: planetexpress
+  gather_facts: yes
+
+  vars_files:
+          - vars/when-vars.yml
+
+
+  tasks:
+          - name: user apt
+            apt:
+                    name: sl
+                    state: present
+            become: yes
+            register: result
+            when: ansible_distribution == "Ubuntu"
+
+          - name: print ou
+            debug:
+                    var: result
+                    verbosity: 1
+
+          - name: print
+            debug:
+                    msg: "the user {{ inventory_hostname }} has a cache_update {{ result.cache_update_time }}"
+
+          - name: show vars file
+            debug:
+                    var: licensetypes.paytypes[0]

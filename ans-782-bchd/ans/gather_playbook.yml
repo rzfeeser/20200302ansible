@@ -1,0 +1,12 @@
+---
+- name: my playbook with vars
+  hosts: planetexpress
+  gather_facts: yes
+
+  vars:
+
+  tasks:
+          - name: show data
+            debug: 
+               var: ansible_all_ipv4_addresses
+

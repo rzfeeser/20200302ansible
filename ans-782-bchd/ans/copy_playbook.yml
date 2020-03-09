@@ -1,0 +1,12 @@
+---
+- name: playbool to copy a file to remote hosts
+  hosts: planetexpress
+  gather_facts: yes
+
+  tasks:
+
+          - name: copy files
+            copy:
+                    src: /home/student/ans/files/lets.go.to.lunch
+                    dest:  ~/
+

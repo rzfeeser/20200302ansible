@@ -1,0 +1,30 @@
+---
+- name: A playbook
+  hosts: localhost
+  gather_facts: yes
+
+
+  tasks:
+          - name: nasa uri
+            uri:
+                    url: http://api.open-notify.org/astros.json
+                    return_content: yes
+            register: data
+
+          - name: output
+            debug:
+                     msg: "{{ data.json.people }}"
+          - name: copy stuff
+            copy:
+                    content: "{{ data }}"
+                    dest: "astros-{{ ansible_date_time.date }}.txt"
+          
+          - name: set a  new 
+            set_fact:
+                    spacecowboys: "{{ data.json.people }}"
+          
+          - name: just the names
+            debug:
+                    msg: "on the space station is {{ item.name.split()[0] }}"
+            loop: "{{ spacecowboys }}"
+
