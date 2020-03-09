@@ -1,0 +1,32 @@
+---
+- name: Learning to work with APIs vis URI module
+  hosts: localhost
+  gather_facts: yes
+
+  vars:
+          apiurl: "http://api.open-notify.org/astros.json"
+
+  tasks:
+          - name: Looking up ISS astros
+            uri: 
+                    url: "{{ apiurl }}"
+                    return_content: yes
+            register: astros
+
+          - name: dump
+            copy:
+                    content: "{{ astros }}"
+                    dest: "astros-{{ ansible_date_time.date }}.txt"
+          - name: debug
+            debug:
+                    var: astros.json.people
+
+          - name: set
+            set_fact:
+                    spacecowboys: "{{ astros.json.people }}"
+
+          - name: debug
+            debug:
+                    msg: "On the space station is {{ item.name.split()[0]  }}" 
+            loop: "{{ spacecowboys }}"
+...

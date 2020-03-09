@@ -1,0 +1,21 @@
+---
+- name: Debug playbook 
+  hosts: planetexpress
+  gather_facts: yes 
+  become: yes
+
+  tasks:
+          - name: Install an app with apt only on my Ubuntu systems
+            apt:
+                    state: present
+                    name: sl
+            when: ansible_distribution == "Ubuntu"
+
+          - name: Print out both users distro
+            debug:
+                    var: ansible_distribution
+          - name: Print out both users distro version
+            debug:
+                    var: ansible_distribution_version
+
+...

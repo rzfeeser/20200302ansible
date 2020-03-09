@@ -1,0 +1,40 @@
+---
+- name: Playbook to copy a file into remote hosts
+  hosts: planetexpress
+  gather_facts: yes 
+  become: yes
+
+  vars:
+          newhire1: zachf
+          newhire2: dawnz
+          newhire3: larryl
+
+  tasks:
+          - name: create a new group
+            group:
+                    name: sandbox
+                    state: present
+          - name: Create a new user
+            user:
+                    name: LarryNewHire
+                    comment: This is a new hire
+                    state: present
+                    shell: /bin/bash
+                    system: no
+                    create_home: yes
+                    group: sandbox
+          - name: Create a new user from a var
+            user:
+                    name: "{{ newhire }}"
+                    comment: Can we make this new hire
+                    state: present
+                    shell: /bin/bash
+                    system: no
+                    create_home: yes
+                    group: sandbox
+                    loop:
+                            - zachf
+                            - dawnz
+                            - larryl
+
+...
