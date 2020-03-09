@@ -1,0 +1,13 @@
+---
+# vars file for dellemc_metrics
+server: *************************
+uniUser: ************************
+uniPass: ************************
+symmID: *************************
+endEpoch: 1583426968000
+startEpoch: 1583340568000
+dataFormat: "Average"
+metrics: "HostIOs"
+storageGroup: *******************
+startDate: 1
+endDate: 2

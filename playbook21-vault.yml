@@ -1,0 +1,12 @@
+---
+- name: Extra vars vault
+  hosts: localhost
+  no_log: True
+  vars_files:
+          - vars/oscreds.yml
+
+  tasks:
+          - name: example of a dask using an encyrpted var
+            debug:
+                    msg: " {{ imscloud }} and other other super secret password QWERTY!!!"
+                    #no_log: True

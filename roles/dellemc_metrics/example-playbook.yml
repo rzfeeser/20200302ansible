@@ -1,0 +1,21 @@
+---
+- name: Retrieve Storage Group Metrics from Unisphere
+  hosts: localhost
+  gather_facts: no
+  become: no
+
+  vars:
+          server: *************************
+          uniUser: ************************
+          uniPass: ************************
+          symmID: *************************
+          endEpoch: 1583426968000
+          startEpoch: 1583340568000
+          dataFormat: "Average"
+          metrics: "HostIOs"
+          storageGroup: *******************
+
+  role:
+          - dellemc_metrics
+
+  tasks:

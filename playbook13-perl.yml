@@ -8,22 +8,36 @@
             args:
                     executable: /usr/bin/perl
             register: results
+            tags:
+                    - perl
+
 
           - name: Debug the results
             debug:
                     var: results
+            tags:
+                    - perl
 
           - name: Run a perl script that performs an API lookup
             script: ~/ans/scripts/perl-apilookup.pl
             args:
                     executable: /usr/bin/perl
             register: results
+            tags:
+                    - perl2
+                    - wip
 
           - name: Debug the results
             debug:
                     var: results
+            tags:
+                    - perl2
 
           - name: print out results
             copy:
                     content: "{{ results.stdout }}"
                     dest: ~/ans/files/perl-apilookup_output.txt
+            tags:
+                    - never
+                    - perl2
+                    - wip

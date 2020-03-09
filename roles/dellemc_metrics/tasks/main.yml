@@ -1,0 +1,27 @@
+---
+# tasks file for dellemc_metrics
+- name: Unisphere REST Call
+  ignore_errors: yes
+  uri:
+          url: "https://{{ server }}:8443/univmax/restapi/performance/StorageGroup/metrics"
+          method: POST
+          validate_certs: no
+          return_content: yes
+          force_basic_auth: yes
+          url_username: "{{ uniUser }}"
+          url_password: "{{ uniPass }}"
+          headers:
+               Content-Type: application/json;charset=UTF-8
+          body_format: json
+          body:
+               startDate: "{{ startDate }}"
+               endDate: "{{ endDate }}"
+               symmetrixId:
+               storageGroupId: *************** ******************
+               dataFormat: "Average"
+               metrics: [ "HostIOs" ]
+  register: results
+
+- name: Show Results
+  debug:
+          var: results

@@ -1,0 +1,35 @@
+---
+- name: String manipulaiton
+  hosts: localhost
+  gather_facts: yes
+
+  vars:
+          volsToMake: 5
+          result: ["cagevsp11 /vol/STS0_DR04_G026/T1-G-DR04-026-CAGEVSP11 DR04-STS0-HV 26"]
+
+  tasks:
+          - name: make some vars
+            set_fact:
+                    lastvar: "{{ result[-1].split()[-1] }}"
+                    clustername: "{{ result[-1].split('/')[-2] }}"
+
+          - name: make another var
+            set_fact:
+                    paddedlastvar: "{{ '%03d'|format(lastvar|int) }}"
+
+          - name: Print the last var
+            debug:
+                    msg: "The last var is {{ lastvar }}"
+                    
+          - name: Print the clauster name
+            debug:
+                    msg: "The cluster name is {{ clustername }}"
+                    
+          - name: Print the padded version of the last var
+            debug:
+                    msg: "The padded var is {{ paddedlastvar }}"
+
+          - name: Loop across the defined number
+            debug:
+                    msg: "The padded var is now {{ '%03d'|format(item + paddedlastvar|int) }}"
+            loop: "{{ range(1, 1 + (volsToMake|int))|list }}"

@@ -1,0 +1,18 @@
+---
+- name: dell emc collection
+  hosts: localhost
+
+  collections:
+          - dellemc.powermax
+
+  tasks:
+          - name: Get list of Maskng Views
+            dellemc_powermax_gatherfacts:
+                    unispherehost: "90.10.2.3"
+                    universion: "90"
+                    verifycert: no
+                    user: admin
+                    password: qwerty
+                    serial_no: 12345678
+                    gather_subset:
+                            - mv

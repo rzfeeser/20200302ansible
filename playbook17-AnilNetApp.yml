@@ -3,19 +3,11 @@
   hosts: localhost   # req to talk to netapp-lib
   gather_facts: yes
 
-  vars_files:
-          - vars/order.yml   # orders:
-                             # - igroup: DR04-STS0-HV
-                             #   noofvols: 5
-                             #   volsize: 50
-                             # - ipgroup: R2D2-C3PO-ZF
-                             #   noofvols: 7
-                             #   volsize: 60
-
   vars:   # must use network username and password in Ansible Tower
           username: "{{ ansible_env.ANSIBLE_NET_USERNAME }}"
           password: "{{ ansible_env.ANSIBLE_NET_PASSWORD }}"
           hostname: 1.1.1.1
+          igroup: SalBass
 
    tasks:
           - name: Issue command to NetApp ontap to determine last vols created
@@ -23,7 +15,7 @@
                     hostname: "{{ hostname }}"
                     username: "{{ username }}"
                     password: "{{ password }}"
-                    command: ["lun mapped show -vserver cagevsp11 -igroup {{ orders.igroup }}  -FIElds path,lun-id"]
+                    command: ["lun mapped show -vserver cagevsp11 -igroup {{ igroup }} -FIElds path,lun-id"]
             register: results
 
           - name: Display the results
