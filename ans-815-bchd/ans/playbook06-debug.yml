@@ -1,0 +1,21 @@
+---
+- name:  print out 32 facts about hosts
+  hosts: planetexpress
+  gather_facts: yes
+  become: yes
+
+  tasks:
+          - name: Install an app with apt onlyu on my Ubuntu systems
+            apt:
+                  state: present
+                  name: sl
+            when: ansible_distribution == "Ubuntu"
+
+          - name: print out both users distro
+            debug:  
+                      var: ansible_distribution
+             
+          - name: print out both users distro ver
+            debug:
+                      var: ansible_distribution_version 
+              

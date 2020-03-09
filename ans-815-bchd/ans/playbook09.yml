@@ -1,0 +1,33 @@
+---
+- name: Learning to work with API's via URI module
+  hosts: localhost
+  gather_facts: yes    # need to determine when to add gather facts and not
+
+  vars:
+          apiurl: "http://api.open-notify.org/astros.json"
+  
+  
+  tasks:
+          - name: looking up ISS astros
+            uri:
+                    url: "{{ apiurl }}"   # data source
+                    return_content: yes   # request content to be returned
+            register: astros    # allow you to get json
+
+          - name: dump json out to a file
+            copy:
+                    content: "{{ astros }}"   # copy content 
+                    dest: "astros-{{ ansible_date_time.date }}.txt" # look up in ansible json /  based on gather_facts
+          
+          - name: debug the results
+            debug:  # print out 
+            var: astros.json.people  # content we want to print out / this is not the same var
+
+          - name: Set a new variable to make things easy
+            set_fact:
+                    spacecowboys: "{{ astros.json.people }}"  # these things mean the same thing now
+
+          - name: just the names on the screen
+            debug:
+                    msg: "On the space station is {{ item.name.split()[0] }}"   #item is dictionary, python method split to list
+            loop: "{{ spacecowboys }}"

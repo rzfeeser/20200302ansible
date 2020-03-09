@@ -1,0 +1,10 @@
+---
+configA: config1.txt
+configB: config2.txt
+licensetypes:
+        Opentypes:
+                - apache2.0
+                  gnu public license
+                  monzilla   # licensetypes.opentypes[2]
+
+        
