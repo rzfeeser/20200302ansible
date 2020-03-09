@@ -1,0 +1,9 @@
+---
+- name: My fist Playbook #name for playbooks
+  hosts: localhost #what we want to run aginst
+  gather_facts: yes #This is on m default
+
+  tasks:
+          - name: My first task - print to the screen
+            debug:
+                    msg: "Put this on the screen"

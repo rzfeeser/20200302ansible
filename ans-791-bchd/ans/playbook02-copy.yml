@@ -1,0 +1,11 @@
+---
+- name: Playbook to copy files into remote hosts
+  hosts: planetexpress
+  gather_facts: yes 
+
+  tasks:
+        - name: Copy files
+          copy:
+                  src: ~/ans/files/letsgo.tolunch
+                  dest: ~/
+

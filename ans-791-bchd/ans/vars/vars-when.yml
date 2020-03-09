@@ -1,0 +1,12 @@
+---
+configA: config1.txt
+configB: config2.txt
+licencetypes:
+        opentypes:
+                - apache2.0
+                - gnu public licence
+                - mozilla
+        paytypes:
+                - windows
+                - redhats
+                - apple

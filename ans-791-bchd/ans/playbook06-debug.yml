@@ -1,0 +1,14 @@
+---
+- name: Debug playbook
+  hosts: planetexpress
+  gather_facts: yes
+
+  tasks:
+          - name: print out vars
+            debug:
+                    var: ansible_distribution
+
+          - name: Print out distro ververion
+            debug:
+                    var: ansible_distribution_version
+...

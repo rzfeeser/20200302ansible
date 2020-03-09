@@ -1,0 +1,37 @@
+---
+- name: Playbook with vars
+  hosts: planetexpress
+  gather_facts: yes
+  become: yes
+  
+  vars:
+          newhire: zachf
+          newhire2: dawnz
+          newhire3: larryl
+
+  tasks:
+          - name: Create new group
+            group:
+                    name: sandbox
+                    state: present
+
+          - name: Create new user
+            user:
+                    name: larrynewhire
+                    comment: Larry New Hire
+                    state: present
+                    shell: /bin/bash
+                    system: no
+                    create_home: yes
+                    group: sandbox
+
+          - name: Create new user from vars
+            user: 
+                name: "{{ newhire }}"
+                comment: Can we make this hire?
+                shell: /bin/bash
+                system: no
+                create_home: yes
+                group: sandbox
+                    
+...

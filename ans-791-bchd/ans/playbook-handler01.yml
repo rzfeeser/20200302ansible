@@ -1,0 +1,30 @@
+---
+- name: Apache server install
+  hosts: web
+  gather_facts: no
+  become: yes
+
+  tasks:
+          - name: install lastest apache
+            package:
+                    name: apache2
+                    state: latest
+          
+          - name: apache enabled and running
+            service: 
+                    name: apache2
+                    enabled: yes
+                    state: started
+
+          - name: Copy index html to webservers
+            template: 
+                    src: index.html.j2 ## using template
+                    dest: /var/www/html/index.html
+
+          - name: Bouncing httpd
+            service:
+                    name: apache2
+                    enabled: yes
+                    state: restarted
+
+...
