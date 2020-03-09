@@ -1,0 +1,19 @@
+---
+- name: Debug playbook to display ansible facts
+  hosts: planetexpress
+  gather_facts: yes
+  become: yes
+
+  vars:
+          reqdfacts:
+                  - ansible_distribution
+                  - ansible_distribution_version
+
+  tasks:
+          - name: Print out both users distro
+            debug:
+                    var: "{{ item }}"
+            loop: "{{ reqdfacts }}"
+
+  tasks:
+          - name: Install an app with 

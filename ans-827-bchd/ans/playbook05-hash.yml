@@ -1,0 +1,32 @@
+---
+- name: My playbook with vars
+  hosts: planetexpress
+  gather_facts: yes
+  become: yes
+
+  vars:
+          newhires:
+                  - user: user1
+                    group: group1
+                  - user: user2
+                    group: group2
+                  - user: user3
+                    group: group3
+
+  tasks:
+          - name: Create a new group
+            group:
+                    name: "{{ item.group }}"
+                    state: present
+            loop: "{{ newhires }}"
+
+          - name: Create a new user from var
+            user:
+                    name: "{{ item.user }}"
+                    comment: New Hire
+                    state: present
+                    shell: /bin/bash
+                    system: no
+                    createhome: yes
+                    group: sandbox
+            loop: "{{ newhires }}"
