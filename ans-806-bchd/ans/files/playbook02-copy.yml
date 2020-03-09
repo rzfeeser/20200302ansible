@@ -1,0 +1,13 @@
+---
+- name: Let copy a files to remote host
+  hosts: planetexpress
+  gather_facts: yes
+
+  tasks:
+          name: copy the file to the remote host from local computer
+          copy:
+                  src: ~/ans/files/letgo.tolunch
+                  des: ~/
+
+
+

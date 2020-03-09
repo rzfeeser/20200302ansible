@@ -1,0 +1,5 @@
+---
+
+imscloud:
+        auth:
+                auth_url: http://192.168.10.1/auth",

@@ -1,0 +1,11 @@
+---
+- name: To copy a file to remote host
+  hosts: planetexpress
+  gather_facts: yes   #this control is set.py runs
+
+
+  tasks:
+          - name: Copy a file to the remoste host
+            copy:
+                    src: ~/ans/files/letsgo.tolunch
+                    dest: ~/      #this is where to move the file

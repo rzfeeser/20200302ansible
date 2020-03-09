@@ -1,0 +1,10 @@
+---
+- name: My First Playbook  #this is just the name of the playbook
+  hosts: localhost  #this is what we running against
+  gather_facts: yes #this is on yes by default
+
+
+  tasks:
+          - name: My first task - print to the screen
+            debug:
+                    msg: "I want this to print to the screen"

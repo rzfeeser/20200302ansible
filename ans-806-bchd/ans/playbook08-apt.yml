@@ -1,0 +1,23 @@
+---
+- name: A playbook using apt
+  hosts: planetexpress:!farnsworth
+  gather_facts: yes
+
+  tasks:
+          - name: use apt to install Steam Locomotive
+            apt:
+                    name: sl
+                    state: present
+                    update_cache: yes
+            become: yes       
+            register: output
+
+          - name: Print out the output
+            debug:
+                    var: output
+                    verbosity: 1
+
+          - name: print out the cache_update_time
+            debug:
+                    msg: "The user {{inventory_hostname}} has update time of {{output.cache_update_time}}"
+                    
