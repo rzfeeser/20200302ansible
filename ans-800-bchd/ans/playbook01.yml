@@ -1,0 +1,9 @@
+---
+- name: My First Playbook
+  hosts: localhost
+  gather_facts: yes
+
+  tasks:
+          - name: My First Task - print to screen
+            debug:
+                    msg: "print to screen"

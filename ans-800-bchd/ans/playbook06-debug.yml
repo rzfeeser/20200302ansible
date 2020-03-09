@@ -1,0 +1,23 @@
+---
+- name: Debug playbook to display ansible facts
+  hosts: planetexpress
+  gather_facts: yes
+
+  tasks:
+#         - name: Install on Ubuntu only
+#           apt:
+#                   state: Present
+#                   name: sl
+#           when: ansible_distribution == "Ubuntu"
+
+          - name: Print out both users distro
+            debug:
+                    var: ansible_distribution
+
+          - name: Print out both users distro version
+            debug:
+                    var: ansible_distribution_version
+
+          - name: Print out ansible_env
+            debug:
+                    var: ansible_env

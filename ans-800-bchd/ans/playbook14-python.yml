@@ -1,0 +1,15 @@
+---
+- name: wirte a plybook that runs a python script
+  hosts: localhost
+
+  tasks:
+          - name: run our python script
+            script: ~/ans/script/
+            args:
+                    executable: /usr/lib/python3
+            register: results
+
+          - name: show the results
+            debug:
+                    var: results
+
