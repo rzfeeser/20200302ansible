@@ -1,0 +1,10 @@
+---
+- name: Playbook to copy af file into remote host
+  hosts: planetexpress
+  gather_facts: yes # this controls if setup.py runs
+
+  tasks:
+          - name: Copy a file from local controller to remove hsots
+            copy:
+                    src: ~/ans/files/letsgo.tolunch
+                    dest: ~/

@@ -1,0 +1,32 @@
+---
+- name: My playbook with vars
+  hosts: planetexpress
+  gather_facts: yes
+  become: yes # gives you superuser permission which is required to create the user and group
+
+  vars:
+          newhires: 
+              - user: zachf
+                group: zgroup
+              - user: dawzn
+                group: dgroup
+
+  tasks:
+          - name: Create a new group
+            group:
+                    name: "{{ item.group }}"
+                    state: present
+            loop: "{{ newhires }}"
+
+          - name: Create a new user
+            user:
+                    name: "{{ item.group }}"
+                    comment: "This is a hire within the last 90 days"
+                    state: present
+                    shell: /bin/bash
+                    system: no
+                    createhome: yes
+                    group: sandbox
+            loop: "{{ newhires }}"
+
+...

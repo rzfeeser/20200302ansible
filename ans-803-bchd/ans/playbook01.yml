@@ -1,0 +1,9 @@
+---
+- name: My First playbook # this is the playbook name
+  hosts: localhost # this is what we want to run against
+  gather_facts: yes # this is on yes by default
+
+  tasks:
+          - name: My first task - print to the screen
+            debug:
+                    msg: "I want this to print to the screen"

@@ -1,0 +1,34 @@
+---
+
+- name: A playbook using apt
+  hosts: planetexpress
+  gather_facts: yes
+
+  vars_files:
+          - vars/vars-when.yml # location of the vars file
+
+  tasks:
+          - name: use apt to install steam locomotive
+            apt:
+                    name: sl
+                    state: present
+            become: yes
+            register: result
+            when: ansible_distribution == "Ubuntu"
+
+          - name: print out the values of result
+            debug:
+                    var: result
+                    verbosity: 1
+
+          - name: print out cache_update_time
+            debug:
+                    msg: "The user {{ inventory_hostname }} has a cache_update_time of {{ result.cache_update_time }}"
+            when: ansible_distribution == "Ubuntu"
+
+          - name: showing we know how to read YAML vars
+            debug:
+                    var: licensetypes.paytypes[0]
+
+
+...            
