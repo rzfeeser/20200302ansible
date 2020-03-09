@@ -1,0 +1,38 @@
+---
+- name: My playbook with vars
+  hosts: devhosts
+  gather_facts: yes
+  become: yes   # sudo root
+
+  vars:
+          newhire: zachf
+          newhire2: dawnz
+          newhire3: larryl
+
+  tasks:
+          - name: Create new group
+            group:
+                    name: sandbox
+                    state: present
+
+          - name: Create a new user
+            user:
+                    name: LarryNewHire
+                    comment: "This is a hire within the last 80 days"
+                    state: present      # state is typically always PRESENT or ABSENT
+                    shell: /bin/bash
+                    create_home: yes
+                    system: no
+                    group: sandbox
+
+          - name: Create a new user from a var
+            user:
+                    name: "{{ newhire }}"
+                    comment: Can we make this new hire
+                    state: present
+                    shell: /bin/bash
+                    system: no
+                    create_home: yes
+                    group: sandbox
+
+...

@@ -1,0 +1,34 @@
+---
+- name: My playbook with vars
+  hosts: devhosts
+  gather_facts: yes
+  become: yes   # sudo root
+
+  vars:
+          newhire: zachf
+          newhire2: dawnz
+          newhire3: dawnz
+
+  tasks:
+          - name: Create new group
+            group:
+                    name: sandbox
+                    state: present
+
+          - name: Create a new user via loop
+            user:
+                    name: "{{ item }}"
+                    comment: Can we make this new hire
+                    state: present
+                    shell: /bin/bash
+                    system: no
+                    create_home: yes
+                    group: sandbox
+            loop:
+                    - LarryNewHire
+                    - larryl
+                    - "{{ newhire }}"
+                    - "{{ newhire2 }}"
+                    - "{{ newhire3 }}"
+
+...

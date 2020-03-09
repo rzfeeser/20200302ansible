@@ -1,0 +1,11 @@
+---
+- name: Write a playbook that runs a Python scripts
+  hosts: localhost
+
+  tasks:
+          - name: run our Python scripts
+            script: ~/ans/scripts/apilookup.py
+            args:
+                    executable: /usr/bin/python3
+            register: results
+...

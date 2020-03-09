@@ -1,0 +1,22 @@
+---
+- name: debug playbook to display ansible facts
+  hosts: devhosts
+  gather_facts: yes
+  become: yes
+
+  tasks:
+          - name: Install an app with apt only on Ubuntu
+            apt:
+                    state: present
+                    name: sl
+            when: ansible_distribution == "Ubuntu"
+
+          - name: print out both users and distro 
+            debug:
+                    var: ansible_distribution
+
+          - name: print out both users distro ver
+            debug:
+                    var: ansible_distribution_version
+
+...
