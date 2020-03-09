@@ -1,0 +1,11 @@
+---
+- name: My first playbook
+  hosts: localhost
+  gather_facts: yes
+
+  tasks:
+          - name: My first task - print to the screen
+            debug:
+                    msg: "I want this to print to the screen."
+
+

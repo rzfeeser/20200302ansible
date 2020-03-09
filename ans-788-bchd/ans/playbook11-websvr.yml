@@ -1,0 +1,31 @@
+---
+
+- name: Apache server deply
+  hosts: web
+  gather_facts: no
+  become: yes
+
+  tasks:
+          - name: Latest version of Apache installed
+            package:
+                    name: apache2
+                    state: latest
+
+          - name: Make sure the service is running
+            service:
+                    name: apache2
+                    enabled: yes
+                    state: started
+
+
+          - name: Render a template to push to our hosts
+            template:
+                    src: index.html.j2
+                    dest: /var/www/html/index.html
+
+          - name: Bounce the service
+            service:
+                    name: apache2
+                    enabled: yes
+                    state: restarted
+
