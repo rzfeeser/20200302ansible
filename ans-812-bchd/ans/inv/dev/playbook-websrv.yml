@@ -1,0 +1,20 @@
+---
+- name: Apache server deploy
+  hosts: web
+  gather_facts: no
+  become: yes
+
+  tasks:
+          - name: latest version of Apache Installed
+            package:
+                    name: apache2
+                    state: latest
+
+
+          - name: make sure a service is running
+            service:
+                    name: apache2
+                    enabled: yes
+                    state: started
+
+

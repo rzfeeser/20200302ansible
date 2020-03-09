@@ -1,0 +1,29 @@
+---
+- name: playbook with vars
+  hosts: localhost
+  gather_facts: yes
+  become: yes
+
+  vars:
+          newhires:
+                  - user: ansible
+                    group: gansible
+                  - user: nas
+                    group: gnas
+  tasks:
+          - name: Create a new group
+            group:
+                    name: "{{ item.group }}"
+                    state: present
+            loop: "{{ newhires }}"
+
+          - name: Create a new user
+            user:
+                    name: "{{ item.user }}"
+                    comment: This is a new user
+                    state: present
+                    shell: /bin/bash
+                    system: yes
+                    createhome: yes
+                    group: "{{ item.group }}"
+            loop: "{{ newhires }}"

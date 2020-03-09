@@ -1,0 +1,22 @@
+---
+- name: playbook with vars
+  hosts: localhost
+  gather_facts: yes
+  become: yes
+
+  tasks:
+          - name: Create a new group
+            group:
+                    name: nasbox
+                    state: present
+
+          - name: Create a new user
+            user:
+                    name: mungamur 
+                    comment: This is a new user
+                    state: present
+                    shell: /bin/bash
+                    system: yes
+                    createhome: yes
+                    group: nasbox
+
